@@ -17,6 +17,10 @@ Digits per index: 9
 #include <stdio.h>
 
 typedef struct Big_Number{
+	int maxSize;
+	int decimalPrecision;
+	int currentSize;
+	int signBit;
 	int* number;
 }Big_Number;
 
@@ -27,5 +31,9 @@ void createBigNumber(Big_Number* bigNumber, int decimalPrecision, int intPrecisi
 void addIntToBig(Big_Number* bigNumber, int number);
 
 #define subIntFromBig(bigNumber, number) (addIntToBig((bigNumber), (-(number))))
+
+void mulIntToBig(Big_Number* bigNumber, int number);
+
+void divIntFromBig(Big_Number* bigNumber, int number);
 
 void printBigNumber(Big_Number* bigNumber);
