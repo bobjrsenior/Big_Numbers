@@ -24,6 +24,10 @@ typedef struct Big_Number{
 	int* number;
 }Big_Number;
 
+extern const int maxbitValue;
+
+extern const int maxbitValuePlus1;
+
 Big_Number* createNewBigNumber(int decimalPrecision, int intPrecision);
 
 void createBigNumber(Big_Number* bigNumber, int decimalPrecision, int intPrecision);
@@ -37,3 +41,5 @@ void mulIntToBig(Big_Number* bigNumber, int number);
 void divIntFromBig(Big_Number* bigNumber, int number);
 
 void printBigNumber(Big_Number* bigNumber);
+
+void freeBigNumber(Big_Number* bigNumber);

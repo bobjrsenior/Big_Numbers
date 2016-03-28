@@ -1,5 +1,9 @@
 #include "Big_Numbers.h"
 
+const int maxbitValue = 999999999;
+
+const int maxbitValuePlus1 = 1000000000;
+
 Big_Number* createNewBigNumber(int decimalPrecision, int intPrecision){
 	Big_Number* bigNumber = (Big_Number*)malloc(sizeof(Big_Number));
 	createBigNumber(bigNumber, decimalPrecision, intPrecision);
@@ -33,15 +37,15 @@ void addIntToBig(Big_Number* bigNumber, int number){
 		bigNumber->number[cur] += (number + remainder);
 
 		//If there is an overflow, send it to the next position
-		if (bigNumber->number[cur] >= 1000000000){
-			remainder = bigNumber->number[cur] / 1000000000;
-			bigNumber->number[cur] -= (1000000000 * remainder);
+		if (bigNumber->number[cur] > maxbitValue){
+			remainder = bigNumber->number[cur] / maxbitValuePlus1;
+			bigNumber->number[cur] -= (maxbitValuePlus1 * remainder);
 			number = 0;
 		}
 		else if (bigNumber->number[cur] < 0){
-			remainder = 1-(bigNumber->number[cur] / 1000000000);
-			bigNumber->number[cur] += (1000000000 * remainder);
-			bigNumber->number[cur] = 1000000000 - bigNumber->number[cur];
+			remainder = 1 - (bigNumber->number[cur] / maxbitValuePlus1);
+			bigNumber->number[cur] += (maxbitValuePlus1 * remainder);
+			bigNumber->number[cur] = maxbitValuePlus1 - bigNumber->number[cur];
 			//++remainder;
 			remainder *= -1;
 			
@@ -82,18 +86,77 @@ void addIntToBig(Big_Number* bigNumber, int number){
 }
 
 void mulIntToBig(Big_Number* bigNumber, int number){
-	/*int maxLength = bigNumber->maxSize,
-		cur = (4 + bigNumber->decimalPrecision),
-		length = (4 + bigNumber->currentSize);
+	int maxLength = bigNumber->maxSize,
+		cur = bigNumber->decimalPrecision,
+		length = bigNumber->currentSize;
 	int remainder = 0;
 
+	
 	long long int temp;
 
 	//Go through each position in the Big_Number
 	for (; cur < length; ++cur){
-		temp = (bigNumber->[cur] * number) + remainder;
 
-	}*/
+		//Compute the new value for this position
+		//and hold it in temp to prevent overflow
+		temp = (bigNumber->number[cur] * number) + remainder;
+
+		//If temp > what can be held in a position
+		if (temp > maxbitValue){
+			//Get the number of overflows
+			remainder = (int) (temp / maxbitValuePlus1);
+
+			//Lower temp to it's normal value (with no overflow)
+			temp -= maxbitValuePlus1 * remainder;
+
+			//Set the big number position to temp
+			bigNumber->number[cur] = (int) temp;
+
+		}//If the new number is negative for some reason
+		else if(temp < 0){
+			//Get the number of underflows
+			remainder = (int) (1 - (temp / maxbitValuePlus1));
+
+			//Raise temp to it's normal value
+			//EX: -3 + 10 = 7 (not 3)
+			temp += maxbitValuePlus1 * remainder;
+			//    10 - 7 = 3
+			temp = maxbitValuePlus1 - temp;
+
+			//Set the big number position to temp
+			bigNumber->number[cur] = (int) temp;
+
+			//Make sure the remainder is negative
+			remainder *= -1;
+		}//If there are no over/underflows
+		else{
+			//Make sure the remainder is 0
+			remainder = 0;
+
+			//Set the big number position to temp
+			bigNumber->number[cur] = (int)temp;
+		}
+	}
+
+	//If we made it to the end of bigNumber and there is a remainder
+	if (cur == length && remainder != 0){
+		if (length == maxLength){
+
+		}
+		else{
+			//Make sure the sign is correct
+			if (remainder < 0){
+				bigNumber->signBit *= -1;
+			}
+			else{
+				bigNumber->signBit *= 1;
+
+				//Add the final remainder to the end and increment our size
+				bigNumber->number[cur] = remainder;
+				++bigNumber->currentSize;
+			}
+		}
+	}
 }
 
 
@@ -112,4 +175,9 @@ void printBigNumber(Big_Number* bigNumber){
 		printf("%09d", bigNumber->number[length]);
 	}
 	printf("\n");
+}
+
+void freeBigNumber(Big_Number* bigNumber){
+	free(bigNumber->number);
+	free(bigNumber);
 }
