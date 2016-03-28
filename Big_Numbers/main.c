@@ -39,6 +39,8 @@ int main(int argc, char* argv[]){
 	printBigNumber(bigNum);
 	mulIntToBig(bigNum, 5);
 	printBigNumber(bigNum);
+	mulIntToBig(bigNum, 10000000);
+	printBigNumber(bigNum);
 
 	freeBigNumber(bigNum);
 	printf("**********\n");

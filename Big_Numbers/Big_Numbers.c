@@ -99,7 +99,7 @@ void mulIntToBig(Big_Number* bigNumber, int number){
 
 		//Compute the new value for this position
 		//and hold it in temp to prevent overflow
-		temp = (bigNumber->number[cur] * number) + remainder;
+		temp = ((long long int)(bigNumber->number[cur]) * number) + remainder;
 
 		//If temp > what can be held in a position
 		if (temp > maxbitValue){
