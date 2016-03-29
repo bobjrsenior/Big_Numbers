@@ -16,6 +16,8 @@ Digits per index: 9
 #include <stdlib.h>
 #include <stdio.h>
 
+
+/* ===== STRUCTS ===== */
 typedef struct Big_Number{
 	int maxSize;
 	int decimalPrecision;
@@ -24,13 +26,18 @@ typedef struct Big_Number{
 	int* number;
 }Big_Number;
 
+/* ===== CONSTANTS ===== */
 extern const int maxbitValue;
 
 extern const int maxbitValuePlus1;
 
+/* ===== CREATE FUNCTIONS ===== */
 Big_Number* createNewBigNumber(int decimalPrecision, int intPrecision);
 
 void createBigNumber(Big_Number* bigNumber, int decimalPrecision, int intPrecision);
+
+/* ===== SIMPLE MATH FUNCTIONS ===== */
+void setIntToBig(Big_Number* bigNumber, int number);
 
 void addIntToBig(Big_Number* bigNumber, int number);
 
@@ -39,6 +46,13 @@ void addIntToBig(Big_Number* bigNumber, int number);
 void mulIntToBig(Big_Number* bigNumber, int number);
 
 void divIntFromBig(Big_Number* bigNumber, int number);
+
+/* ===== NON-SIMPLE MATH FUNCTIONS ===== */
+Big_Number* factorialNew(int number);
+
+void bigFactorial(Big_Number* bigNumber, int number);
+
+/* ===== OTHER FUNCTIONS ===== */
 
 void printBigNumber(Big_Number* bigNumber);
 

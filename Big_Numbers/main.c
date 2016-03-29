@@ -41,6 +41,21 @@ int main(int argc, char* argv[]){
 	printBigNumber(bigNum);
 	mulIntToBig(bigNum, 10000000);
 	printBigNumber(bigNum);
+	mulIntToBig(bigNum, -1);
+	printBigNumber(bigNum);
+	mulIntToBig(bigNum, -2);
+	printBigNumber(bigNum);
+
+	freeBigNumber(bigNum);
+	printf("**********\n");
+
+	printf("Factorial Tests\n");
+
+	bigNum = createNewBigNumber(10, 1000);
+
+	bigFactorial(bigNum, 1024);
+	printf("1000!:\n");
+	printBigNumber(bigNum);
 
 	freeBigNumber(bigNum);
 	printf("**********\n");

@@ -23,6 +23,20 @@ void createBigNumber(Big_Number* bigNumber, int decimalPrecision, int intPrecisi
 	}
 }
 
+void setIntToBig(Big_Number* bigNumber, int number){
+	int maxLength = bigNumber->maxSize,
+		cur = bigNumber->decimalPrecision + 1;
+
+	bigNumber->currentSize = cur;
+	bigNumber->signBit = abs(number) / number;
+
+	bigNumber->number[--cur] = number;
+
+	for (--cur; cur >= 0; --cur){
+		bigNumber->number[cur] = 0;
+	}	
+}
+
 void addIntToBig(Big_Number* bigNumber, int number){
 	int maxLength = bigNumber->maxSize,
 		cur = bigNumber->decimalPrecision,
@@ -156,6 +170,22 @@ void mulIntToBig(Big_Number* bigNumber, int number){
 				++bigNumber->currentSize;
 			}
 		}
+	}
+}
+
+Big_Number* factorialNew(int number){
+
+	//int estimatedFinalLengh = (number / 10);
+	//Big_Number* bigNumber = createNewBigNumber(0, number);
+	//
+	return NULL;
+}
+
+void bigFactorial(Big_Number* bigNumber, int number){
+	setIntToBig(bigNumber, number--);
+
+	for (; number > 1; --number){
+		mulIntToBig(bigNumber, number);
 	}
 }
 
