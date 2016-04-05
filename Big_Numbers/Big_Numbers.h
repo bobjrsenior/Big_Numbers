@@ -48,7 +48,7 @@ void mulIntToBig(Big_Number* bigNumber, int number);
 void divIntFromBig(Big_Number* bigNumber, int number);
 
 /* ===== NON-SIMPLE MATH FUNCTIONS ===== */
-Big_Number* factorialNew(int number);
+Big_Number* bigFactorialNew(int number);
 
 void bigFactorial(Big_Number* bigNumber, int number);
 

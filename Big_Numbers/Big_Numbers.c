@@ -173,12 +173,28 @@ void mulIntToBig(Big_Number* bigNumber, int number){
 	}
 }
 
-Big_Number* factorialNew(int number){
+void divIntFromBig(Big_Number* bigNumber, int number){
+	int maxLength = bigNumber->maxSize,
+		cur = bigNumber->currentSize,
+		end = bigNumber->decimalPrecision;
+	int remainder = 0;
 
-	//int estimatedFinalLengh = (number / 10);
-	//Big_Number* bigNumber = createNewBigNumber(0, number);
-	//
-	return NULL;
+	//Go through each position in the Big_Number
+	for (; cur >= end; ++cur){
+		bigNumber->number[cur] += remainder;
+		bigNumber->number[cur] /= number;
+
+
+		
+	}
+}
+
+
+Big_Number* bigFactorialNew(int number){
+
+	Big_Number* bigNumber = createNewBigNumber(0, number);
+	bigFactorial(bigNumber, number);
+	return bigNumber;
 }
 
 void bigFactorial(Big_Number* bigNumber, int number){
