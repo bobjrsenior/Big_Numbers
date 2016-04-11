@@ -99,6 +99,68 @@ void addIntToBig(Big_Number* bigNumber, int number){
 	}
 }
 
+void AddBigToBig(Big_Number* bigNumber, Big_Number* bigNumber2){
+	int maxLength = bigNumber->maxSize,
+		cur1 = bigNumber->decimalPrecision,
+		length1 = bigNumber->currentSize,
+		cur2 = bigNumber2->decimalPrecision,
+		length2 = bigNumber2->currentSize,
+		offset = 0;
+	int remainder = 0;
+
+	//Go through each position in the additive Big_Number
+	for (; cur2 + offset < length2; ++offset){
+		
+		if (cur1 + offset < length1){
+			//Add the number and remainder
+			bigNumber->number[cur1 + offset] += (bigNumber2->number[cur2 + offset] + remainder);
+		}
+		else{
+			//Add the number and remainder
+			bigNumber->number[cur1 + offset] = (bigNumber2->number[cur2 + offset] + remainder);
+		}
+
+		//If there is an overflow, send it to the next position
+		if (bigNumber->number[cur1 + offset] > maxbitValue){
+			remainder = bigNumber->number[cur1 + offset] / maxbitValuePlus1;
+			bigNumber->number[cur1 + offset] -= (maxbitValuePlus1 * remainder);
+		}
+		else if (bigNumber->number[cur1 + offset] < 0){
+			remainder = 1 - (bigNumber->number[cur1 + offset] / maxbitValuePlus1);
+			bigNumber->number[cur1 + offset] += (maxbitValuePlus1 * remainder);
+			bigNumber->number[cur1 + offset] = maxbitValuePlus1 - bigNumber->number[cur1 + offset];
+			//++remainder;
+			remainder *= -1;
+		}
+	}
+	//If we reached the end and had a remainder
+	if (cur1 + offset == length1 && remainder != 0){
+		//Make sure we don't have a buffer overflow
+		if (length1 == maxLength){
+			if (remainder < 0){
+				bigNumber->signBit *= -1;
+			}
+			else{
+				bigNumber->signBit *= 1;
+			}
+			return;
+		}
+		else{
+			if (remainder < 0){
+				bigNumber->signBit *= -1;
+			}
+			else{
+				bigNumber->signBit *= 1;
+
+				//Add the final remainder to the end and increment our size
+				bigNumber->number[cur1 + offset] = remainder;
+				++bigNumber->currentSize;
+			}
+		}
+	}
+
+}
+
 void mulIntToBig(Big_Number* bigNumber, int number){
 	int maxLength = bigNumber->maxSize,
 		cur = bigNumber->decimalPrecision,
@@ -189,6 +251,10 @@ void divIntFromBig(Big_Number* bigNumber, int number){
 	}
 }
 
+void multBigToBigInt(Big_Number* bigNumber, Big_Number* bigNumber2){
+
+}
+
 
 Big_Number* bigFactorialNew(int number){
 
@@ -197,13 +263,31 @@ Big_Number* bigFactorialNew(int number){
 	return bigNumber;
 }
 
+////FACTORIAL
+
 void bigFactorial(Big_Number* bigNumber, int number){
 	setIntToBig(bigNumber, number--);
 
-	for (; number > 1; --number){
-		mulIntToBig(bigNumber, number);
+	//Set up the swing
+	int n = number, bits = 0;
+
+	while (n != 0){
+		if ((n & 1) == 1){
+			++bits;
+		}
+		n = n >> 1;
 	}
+
+
 }
+
+void recursionSwing(Big_Number* bigNumber, int number){
+	if (number < 2){
+		return 1;
+	}
+
+}
+
 
 
 void printBigNumber(Big_Number* bigNumber){

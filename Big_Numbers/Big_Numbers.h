@@ -43,12 +43,18 @@ void addIntToBig(Big_Number* bigNumber, int number);
 
 #define subIntFromBig(bigNumber, number) (addIntToBig((bigNumber), (-(number))))
 
+void AddBigToBig(Big_Number* bigNumber, Big_Number* bigNumber2);
+
 void mulIntToBig(Big_Number* bigNumber, int number);
 
 void divIntFromBig(Big_Number* bigNumber, int number);
 
+void multBigToBigInt(Big_Number* bigNumber, Big_Number* bigNumber2);
+
 /* ===== NON-SIMPLE MATH FUNCTIONS ===== */
 Big_Number* bigFactorialNew(int number);
+
+void recursionSwing(Big_Number* bigNumber, int number);
 
 void bigFactorial(Big_Number* bigNumber, int number);
 
