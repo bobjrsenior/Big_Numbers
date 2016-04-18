@@ -144,7 +144,7 @@ int main(int argc, char* argv[]){
 
 	printf("%d!:\n", fact);
 
-	printf("\nOperation took %u milliseconds\n", diff);
+	printf("Operation took %u milliseconds\n", diff);
 
 	freeBigNumber(bigNum);
 	
@@ -160,9 +160,19 @@ int main(int argc, char* argv[]){
 
 	fact = 16384;
 
+	ftime(&start);
+
 	primeArray = newPrimeFactorial(fact);
 
-	printPrimeArray(primeArray);
+	ftime(&end);
+
+	diff = (int)(1000.0 * (end.time - start.time) + (end.millitm - start.millitm));
+
+	printf("%d!:\n", fact);
+
+	printf("Operation took %u milliseconds\n", diff);
+
+	//printPrimeArray(primeArray);
 
 	freePrimeArray(primeArray);
 
