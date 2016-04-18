@@ -15,6 +15,7 @@ Digits per index: 9
 */
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 
 
 /* ===== STRUCTS ===== */
@@ -26,6 +27,11 @@ typedef struct Big_Number{
 	int* number;
 }Big_Number;
 
+typedef struct Prime_Array{
+	int primeSize;
+	int* primeFrequencies;
+}Prime_Array;
+
 /* ===== CONSTANTS ===== */
 extern const int maxbitValue;
 
@@ -36,6 +42,10 @@ Big_Number* createNewBigNumber(int decimalPrecision, int intPrecision);
 
 void createBigNumber(Big_Number* bigNumber, int decimalPrecision, int intPrecision);
 
+Prime_Array* createNewPrimeArray(int primeSize);
+
+void createPrimeArray(Prime_Array* primeArray, int primeSize);
+
 /* ===== SIMPLE MATH FUNCTIONS ===== */
 void setIntToBig(Big_Number* bigNumber, int number);
 
@@ -43,7 +53,7 @@ void addIntToBig(Big_Number* bigNumber, int number);
 
 #define subIntFromBig(bigNumber, number) (addIntToBig((bigNumber), (-(number))))
 
-void AddBigToBig(Big_Number* bigNumber, Big_Number* bigNumber2);
+void AddBigToBig(Big_Number* bigNumber, Big_Number* bigNumber2, int offsetBits);
 
 void mulIntToBig(Big_Number* bigNumber, int number);
 
@@ -58,8 +68,18 @@ void recursionSwing(Big_Number* bigNumber, int number);
 
 void bigFactorial(Big_Number* bigNumber, int number);
 
+Prime_Array* newPrimeFactorial(int number);
+
+void primeFactorial(Prime_Array* primeArray, int number);
+
 /* ===== OTHER FUNCTIONS ===== */
+
+void copyBigNumber(Big_Number* bigNumber, Big_Number* bigNumber2);
 
 void printBigNumber(Big_Number* bigNumber);
 
+void printPrimeArray(Prime_Array* primeArray);
+
 void freeBigNumber(Big_Number* bigNumber);
+
+void freePrimeArray(Prime_Array* primeArray);
