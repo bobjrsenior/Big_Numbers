@@ -158,7 +158,7 @@ int main(int argc, char* argv[]){
 
 	printf("Prime Factorial Tests\n");
 
-	fact = 16384;
+	fact = 90000;
 
 	ftime(&start);
 

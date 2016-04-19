@@ -15,8 +15,7 @@ Digits per index: 9
 */
 #include <stdlib.h>
 #include <stdio.h>
-#include <math.h>
-
+#include <stdint.h>
 
 /* ===== STRUCTS ===== */
 typedef struct Big_Number{

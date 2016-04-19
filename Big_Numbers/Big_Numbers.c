@@ -340,6 +340,7 @@ Prime_Array* newPrimeFactorial(int number){
 			return primeArray;
 		}
 	}
+	return NULL;
 }
 
 void primeFactorial(Prime_Array* primeArray, int number){
@@ -348,21 +349,21 @@ void primeFactorial(Prime_Array* primeArray, int number){
 
 	//Go through the list of primes under half the number and find their multiplicity
 	for (e = 0; primes[e] <= half; ++e){
-		int temp = primes[e];
+		int64_t temp = primes[e];
 		//There is one multiplicity for every multiple of prime[e] under number
 		//EX: there is a 2 in 2, 4, 6, 8, ...
-		primeArray->primeFrequencies[e] = number / temp;
+		primeArray->primeFrequencies[e] = (int) (number / temp);
 
 		//Capture the extras from the multiples
 		//EX: Every 4 has an extra 2. Every 8 has another extra 2. Every 16 has another extra 2
 		while ((temp *= primes[e]) <= number){
-			primeArray->primeFrequencies[e] += number / temp;
+			primeArray->primeFrequencies[e] += (int) (number / temp);
 		}
 	}
 
 	//Every prime greater than half the number will have a multiplicity of 1
 	for (; primes[e] <= number; ++e){
-		++primeArray->primeFrequencies[e];
+		primeArray->primeFrequencies[e] = 1;
 	}
 }
 
