@@ -16,6 +16,7 @@ Digits per index: 9
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <math.h>
 
 /* ===== STRUCTS ===== */
 typedef struct Big_Number{
@@ -35,6 +36,8 @@ typedef struct Prime_Array{
 extern const int maxbitValue;
 
 extern const int maxbitValuePlus1;
+
+int generatePrimes(int maxPrime);
 
 /* ===== CREATE FUNCTIONS ===== */
 Big_Number* createNewBigNumber(int decimalPrecision, int intPrecision);

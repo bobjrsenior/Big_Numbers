@@ -7,12 +7,25 @@ int main(int argc, char* argv[]){
 
 	struct timeb start, end;
 	unsigned int diff;
+	int fact = 1 << 30;
 
-	printf("Addition and Subtraction Tests\n");
-	Big_Number* bigNum = createNewBigNumber(10, 1000);
+	
+	
+	Big_Number* bigNum;
 	Big_Number* bigNum2;
 	Prime_Array* primeArray;
+	
+	//int temp =	1000000000;
+	//double primes = temp / (log(temp) - 1.08366);
+	//printf("Primes less than %d: %f\n", temp, primes);
+	
+	if (generatePrimes(fact)){
+		return -1;
+	}
 
+	/*
+	printf("Addition and Subtraction Tests\n");
+	bigNum = createNewBigNumber(10, 1000);
 	addIntToBig(bigNum, 5);
 	printBigNumber(bigNum);
 	subIntFromBig(bigNum, 8);
@@ -121,13 +134,13 @@ int main(int argc, char* argv[]){
 
 
 	printf("**********\n");
-	*/
+	
 	printf("Big Factorial Tests\n");
 
 	//printf("Unimplemented\n");
 
 	
-	int fact = 1024;
+	
 
 	bigNum = createNewBigNumber(10, fact);
 
@@ -156,27 +169,41 @@ int main(int argc, char* argv[]){
 
 	printf("**********\n");
 
-	printf("Prime Factorial Tests\n");
+	*/
+	
+	
+	printf("Number\tTime(milliseconds)\n");
 
-	fact = 90000;
+	int e = 1;
+	for (; e < 31; ++e){
+		int a = 0;
+		unsigned int sum = 0;
+		
+		fact = 1 << e;
 
-	ftime(&start);
 
-	primeArray = newPrimeFactorial(fact);
 
-	ftime(&end);
+		for (; a < 24; ++a){
 
-	diff = (int)(1000.0 * (end.time - start.time) + (end.millitm - start.millitm));
+			ftime(&start);
 
-	printf("%d!:\n", fact);
+			primeArray = newPrimeFactorial(fact);
 
-	printf("Operation took %u milliseconds\n", diff);
+			ftime(&end);
 
-	//printPrimeArray(primeArray);
+			diff = (unsigned int)(1000.0 * (end.time - start.time) + (end.millitm - start.millitm));
 
-	freePrimeArray(primeArray);
+			sum += diff;
 
-	printf("**********\n");
+			
+
+			//printPrimeArray(primeArray);
+
+			freePrimeArray(primeArray);
+		}
+		printf("%d\t%f\n", e, (double) (sum) / a);
+
+	}
 
 	return EXIT_SUCCESS;
 }
