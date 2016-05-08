@@ -15,10 +15,11 @@ const int maxbitValuePlus1 = 1000000000;
 int generatePrimes(int maxPrime){
 	int e = 0;
 	int curNumPrimes = 0;
+	
 
 	numPrimes = (int) ((maxPrime / (log(maxPrime) - 1.08366)) + 0.5);
 	
-	if ((primes = (int *)malloc(numPrimes * sizeof(int))) == NULL){
+	if ((primes = (int *)_aligned_malloc(numPrimes * sizeof(int), 32)) == NULL){
 		return -1;
 	}
 
@@ -52,7 +53,7 @@ int generatePrimes(int maxPrime){
 			}
 		}
 	}
-	primes = (int*)realloc(primes, curNumPrimes * sizeof(int));
+	primes = (int*)_aligned_realloc(primes, curNumPrimes * sizeof(int), 32);
 	numPrimes = curNumPrimes;
 
 	return 0;
@@ -78,9 +79,9 @@ void createBigNumber(Big_Number* bigNumber, int decimalPrecision, int intPrecisi
 }
 
 Prime_Array* createNewPrimeArray(int primeSize){
-	Prime_Array* primeArray = (Prime_Array*)malloc(sizeof(Prime_Array));
+	Prime_Array* primeArray = (Prime_Array*)_aligned_malloc(sizeof(Prime_Array), 32);
 	primeArray->primeSize = primeSize;
-	primeArray->primeFrequencies = (int*)calloc(primeSize, sizeof(int));
+	primeArray->primeFrequencies = (int*)_aligned_malloc(primeSize * sizeof(int), 32);
 	return primeArray;
 }
 
@@ -409,7 +410,8 @@ void primeFactorial(Prime_Array* primeArray, int number){
 	//Go through the list of primes under half the number and find their multiplicity
 	#pragma omp parallel for
 	for (e = 0; e < end; ++e){
-		
+		int sum = 0;
+		int curPrime = primes[e];
 		/* 
 		*
 		* Multiplicity = sum (number / primes[e]^x) while (number / primes[e]^x) >= 1
@@ -430,12 +432,12 @@ void primeFactorial(Prime_Array* primeArray, int number){
 		* Multiplicity = sum (number / primes[e]^x) while (number / primes[e]^x) >= 1
 		*
 		*/
-		int temp = number / primes[e];
+		int temp = number / curPrime;
 		
 		do{
-			primeArray->primeFrequencies[e] += temp;
-		} while ((temp /= primes[e]) > 0);
-
+			sum += temp;
+		} while ((temp /= curPrime) > 0);
+		primeArray->primeFrequencies[e] = sum;
 		
 	}
 
@@ -506,6 +508,6 @@ void freeBigNumber(Big_Number* bigNumber){
 }
 
 void freePrimeArray(Prime_Array* primeArray){
-	free(primeArray->primeFrequencies);
-	free(primeArray);
+	_aligned_free(primeArray->primeFrequencies);
+	_aligned_free(primeArray);
 }
