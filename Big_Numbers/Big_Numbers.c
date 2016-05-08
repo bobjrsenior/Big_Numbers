@@ -39,7 +39,7 @@ int generatePrimes(int maxPrime){
 		int root = (int) sqrtf((float)e);
 
 		for (; primes[a] <= root; ++a){
-			if (primes[a] % root == 0){
+			if (e % primes[a] == 0){
 				prime = 0;
 				break;
 			}
@@ -407,7 +407,7 @@ void primeFactorial(Prime_Array* primeArray, int number){
 	}
 
 	//Go through the list of primes under half the number and find their multiplicity
-	//#pragma omp parallel for
+	#pragma omp parallel for
 	for (e = 0; e < end; ++e){
 		
 		/* 
@@ -445,11 +445,11 @@ void primeFactorial(Prime_Array* primeArray, int number){
 	}
 }
 
-void recursionSwing(Big_Number* bigNumber, int number){
-	if (number < 2){
-		return 1;
-	}
+int piNumber(int number){
+	int e = 0;
+	for (; e < numPrimes && primes[e] < number; ++e);
 
+	return e;
 }
 
 void copyBigNumber(Big_Number* bigNumber, Big_Number* bigNumber2){

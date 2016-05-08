@@ -66,13 +66,13 @@ void multBigToBigInt(Big_Number* bigNumber, Big_Number* bigNumber2);
 /* ===== NON-SIMPLE MATH FUNCTIONS ===== */
 Big_Number* bigFactorialNew(int number);
 
-void recursionSwing(Big_Number* bigNumber, int number);
-
 void bigFactorial(Big_Number* bigNumber, int number);
 
 Prime_Array* newPrimeFactorial(int number);
 
 void primeFactorial(Prime_Array* primeArray, int number);
+
+int piNumber(int number);
 
 /* ===== OTHER FUNCTIONS ===== */
 

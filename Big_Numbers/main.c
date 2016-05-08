@@ -172,9 +172,10 @@ int main(int argc, char* argv[]){
 	*/
 	
 	
-	printf("Number\tTime(milliseconds)\n");
+	printf("Number\tTime(milliseconds)\tpi(n)\n");
 
 	int e = 1;
+	//Check time for exponents of 2 from 2^1 to 2^30
 	for (; e < 31; ++e){
 		int a = 0;
 		unsigned int sum = 0;
@@ -182,7 +183,7 @@ int main(int argc, char* argv[]){
 		fact = 1 << e;
 
 
-
+		//Time the factorization 24 times for a more accurate average
 		for (; a < 24; ++a){
 
 			ftime(&start);
@@ -201,8 +202,8 @@ int main(int argc, char* argv[]){
 
 			freePrimeArray(primeArray);
 		}
-		printf("%d\t%f\n", e, (double) (sum) / a);
 
+		printf("%d\t%f\t%d\n", e, (double) (sum) / a, piNumber(fact));
 	}
 
 	return EXIT_SUCCESS;
