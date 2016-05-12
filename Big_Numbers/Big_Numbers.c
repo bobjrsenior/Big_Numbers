@@ -408,7 +408,7 @@ void primeFactorial(Prime_Array* primeArray, int number){
 	}
 
 	//Go through the list of primes under half the number and find their multiplicity
-	#pragma omp parallel for
+	//#pragma omp parallel for
 	for (e = 0; e < end; ++e){
 		int sum = 0;
 		int curPrime = primes[e];
